@@ -3,7 +3,7 @@
 # various by python (v3.3) stuff while I learn the langugage
 # (taking my features.rb script and porting it to python)
 
-# Really useful to me: 
+# Really useful to me:
 #   google course on python:     https://developers.google.com/edu/python/
 #   software carpentry bootcamp: http://software-carpentry.org/v4/python/index.html
 
@@ -102,7 +102,7 @@ for i in range(1,6):
   print("%d^2 = %d" % (i, i**2))
 
 i = 1
-while i <= 5
+while i <= 5:
   print("%d^2 = %d" % (i, i**2))
   i += 1
 
@@ -149,48 +149,70 @@ x.pop("a")
 print(x)
 
 x = {"a" : 1, "b" : 2, "c" : 3}
-for key in x.keys(): # "for key in x:" would work if I weren't modifying the keys in place
+z = x.keys()
+for key in z: # "for key in x:" would work if I weren't modifying the keys in place
   if x[key] == 2:
     x.pop(key)
 print(x)
 
+# alternatively:
+x = {"a" : 1, "b" : 2, "c" : 3}
+z = [key for key in x.keys() if x[key] == 2]
+for key in z:
+  x.pop(key)
+print(x)
 
-# the stuff below is ruby code that i've not yet ported
+x = {"a":1, "b":2}
+x['d'] = x['d']+1 if 'd' in x else 1
+
 
 ## slices of arrays, negative index to start from end
-#a = 2.step(12, 2).to_a
-#p a[1..3]
-#p a[-1]
-#p a[-3 .. -2]
+a = list(range(2, 13, 2))
+print(a[1:3])
+print(a[-1])
+print(a[-3:-2])
+print(a[-3])
+print(a[-3:-1])
 
 ## conversion between classes
-#"5".to_i        # to integer
-#"6".to_f        # to float
-#"blah".to_sym   # to symbol
-#252.3.to_s      # to string
+int("5")        # to integer
+float("6")      # to float
+str(252.3)      # to string
 
 ## a bit of text manipulation
-#text = %q{We may at once admit that any inference from the particular to the general must be attended with some degree of uncertainty, but this is not the same as to admit that such inference cannot be absolutely rigorous, for the nature and degree of the uncertainty may itself be capable of rigorous expression.} 
-#stopwords = %w{the a by on for of are with just but and to my in I has some}.map {|z| z.downcase}
-#words = text.downcase.scan(/\w+/)
-#keywords = words.select { |w| !stopwords.include?(w) }
-#print keywords.join(" ")
-#print %|no. char  = #{keywords.join(" ").length}|
-#print "no. words = #{keywords.length}"
+text = '''We may at once admit that any inference from the particular
+to the general must be attended with some degree of uncertainty,
+but this is not the same as to admit that such inference cannot
+be absolutely rigorous, for the nature and degree of the uncertainty
+may itself be capable of rigorous expression.'''
+stopwords = 'the a by on for of are with just but and to my in I has some'.lower().split()
+words = text.lower().split()
+keywords = [word for word in words if word not in stopwords]
+print(' '.join(keywords))
+print("no. char  =", len(' '.join(keywords)))
+print("no. words =", len(keywords))
 
 ## playing with map
-#n = 8
-#counts = 1.upto(n).map { 0 }
-#print counts.join(" ")
-#x = 1.upto(1000).map {|z| rand(8)}
-#x.each {|z| counts[z] = counts[z] + 1 }
-#print counts.join(" ")
+n = 8
+counts = map(lambda x: 0, range(n))
+print(' '.join(counts))
+import random
+x = map(lambda z: random.randint(1,8), range(1000))
+counts = []
+for i in range(1,9):
+  counts.append( sum(z==i for z in y) )
+print(' '.join(map(str, counts)))
 
 ## looping over hashes (also sorting)
-#words = %w{We may at once admit that any inference from the particular to the general must be attended with some degree of uncertainty, but this is not the same as to admit that such inference cannot be absolutely rigorous, for the nature and degree of the uncertainty may itself be capable of rigorous expression.} 
-#words = words.map { |z| z.gsub(/[,\.]/, "") }
-#wordcount = {}
-#words.each { |z| wordcount[z] = wordcount[z].nil? ? 1 : wordcount[z] + 1 }
+words = '''We may at once admit that any inference from the particular to the general
+must be attended with some degree of uncertainty, but this is not the same as to
+admit that such inference cannot be absolutely rigorous, for the nature and
+degree of the uncertainty may itself be capable of rigorous expression.'''.split()
+import re
+words = list(map(lambda word: re.sub(r'[,\.]', '', word), words))
+wordcount = {}
+for word in words:
+  wordcount[word] = wordcount[word]+1 if word in wordcount else 1
 #def by_count_and_length (a,b,hash)
 #  return a.length <=> b.length if hash[a] == hash[b]
 #  hash[a] <=> hash[b]
