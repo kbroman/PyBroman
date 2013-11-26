@@ -149,7 +149,7 @@ x.pop("a")
 print(x)
 
 x = {"a" : 1, "b" : 2, "c" : 3}
-z = x.keys()
+z = list(x.keys())  # need list() since I'll be modifying the keys in place
 for key in z: # "for key in x:" would work if I weren't modifying the keys in place
   if x[key] == 2:
     x.pop(key)
@@ -195,7 +195,7 @@ print("no. words =", len(keywords))
 ## playing with map
 n = 8
 counts = map(lambda x: 0, range(n))
-print(' '.join(counts))
+print(' '.join(map(str, counts)))
 import random
 x = map(lambda z: random.randint(1,8), range(1000))
 counts = []
