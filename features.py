@@ -234,33 +234,50 @@ def count_and_length (a):
   return [wordcount[a], len(a)]
 sorted(wordcount.keys(), key=count_and_length)
 
-
 ## regex
-#print "ok 1" if /AM/i =~ 'am'
-#print "ok 2" if /\Ablah/ =~ "blah a number of special\nAll of these are"
-#print "ok 3" unless /\AAll/ =~ "blah a number of special\nAll of these are"
-#print "ok 4" if /^blah/ =~ "blah a number of special\nAll of these are"
-#print "ok 5" if /^All/ =~ "blah a number of special\nAll of these are"
-#print "ok 6" unless /special\z/ =~ "blah a number of special\nAll of these are"
-#print "ok 7" if /are\z/ =~ "blah a number of special\nAll of these are"
-#print "ok 8" if /special$/ =~ "blah a number of special\nAll of these are"
-#print "ok 9" if /are$/ =~ "blah a number of special\nAll of these are"
-#print "ok 10" unless /blah.*are/ =~ "blah a number of special\nAll of these are"
-#print "ok 11" if /blah.*are/m =~ "blah a number of special\nAll of these are"
-#$x = "Today is 8/6/2013, while tomorrow is 8/7/2013."
-#if $x =~ /(\d+)\/(\d+)\/(\d+)/ # $~ contains info about
-#  print "Month = #{$~[1]}, day = #{$~[2]}, year = #{$~[3]}"
-#  print "Month = #{$1}, day = #{$2}, year = #{$3}"
-#  print $& # matched text
-#  print $` # text before the match
-#  print $' # text after the match
-#  print $+ # last bit of the match
-#end
+import re
+if not re.search(r'AM', 'am'):
+  print('ok 1')
+if re.search(r'(?i)AM', 'am'):
+  print('ok 2')
+if re.search(r'AM', 'am', re.IGNORECASE):
+  print('ok 3')
+multi = 'blah a number of special\nAll of these are'
+if re.search(r'\Ablah', multi):
+  print('ok 4')
+if not re.search(r'\AAll', multi):
+  print('ok 5')
+if re.search(r'^blah', multi):
+  print('ok 6')
+if not re.search(r'^All', multi):
+  print('ok 7')
+if re.search(r'^A', multi, re.MULTILINE):
+  print('ok 8')
+if not re.search(r'special\Z', multi):
+  print('ok 9')
+if re.search(r'special$', multi, re.MULTILINE):
+  print('ok 10')
+if re.search(r'are\Z', multi, re.MULTILINE):
+  print('ok 11')
+if re.search(r'are\Z', multi):
+  print('ok 12')
+if not re.search(r'special$', multi):
+  print('ok 13')
+if re.search(r'special$', multi, re.MULTILINE):
+  print('ok 14')
+if re.search(r'are$', multi):
+  print('ok 15')
+if not re.search(r'blah.*are', multi):
+  print('ok 16')
+if re.search(r'blah.*are', multi, re.DOTALL):
+  print('ok 17')
+x = 'Today is 11/26/2013, while tomorrow is 11/27/2013.'
+z = re.search(r'(\d+)/(\d+)/(\d+)', x)
+if z:
+  print('Month = %s, day = %s, year = %s' % (z.group(1), z.group(2), z.group(3)))
+zz = re.findall(r'(\d+)/(\d+)/(\d+)', x)
+if zz:
+  print('Month = %s, day = %s, year = %s' % (zz[0][0], zz[0][1], zz[0][2]))
+if len(zz) > 1:
+  print('Month = %s, day = %s, year = %s' % (zz[1][0], zz[1][1], zz[1][2]))
 
-## symbols and strings
-#the_string = :all.to_s
-#the_symbol = "all".to_sym
-#print the_string.to_sym == the_symbol
-#print the_string.to_sym.equal?(the_symbol)
-#print the_symbol.to_s == the_string
-#print (not the_symbol.to_s.equal?(the_string))
