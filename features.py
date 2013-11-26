@@ -213,11 +213,27 @@ words = list(map(lambda word: re.sub(r'[,\.]', '', word), words))
 wordcount = {}
 for word in words:
   wordcount[word] = wordcount[word]+1 if word in wordcount else 1
-#def by_count_and_length (a,b,hash)
-#  return a.length <=> b.length if hash[a] == hash[b]
-#  hash[a] <=> hash[b]
-#end
-#wordcount.keys.sort {|a,b| by_count_and_length(a,b,wordcount) }.each {|z| print "#{z} => #{wordcount[z]}"}
+
+# sort by word length
+sorted(wordcount.keys(), key=len)
+
+# sort by count
+sorted(wordcount.keys(), key=lambda x: wordcount[x])
+
+# by count then word length
+sorted(wordcount.keys(), key=lambda x: [wordcount[x], len(x)])
+
+# by word length then count
+sorted(wordcount.keys(), key=lambda x: [len(x), wordcount[x]])
+
+# by count then word length, but reversed
+sorted(wordcount.keys(), key=lambda x: [wordcount[x], len(x)], reverse=True)
+
+# using a function
+def count_and_length (a):
+  return [wordcount[a], len(a)]
+sorted(wordcount.keys(), key=count_and_length)
+
 
 ## regex
 #print "ok 1" if /AM/i =~ 'am'
