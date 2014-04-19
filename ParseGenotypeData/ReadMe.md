@@ -12,6 +12,7 @@ single file in the format used byt the CRI-MAP program.
 - [`markers.txt`](markers.txt) &mdash; ordered markers
 - [`data_save.gen`](data_save.gen) &mdash; desired output file
 - [`convert.pl`](convert.pl) &mdash; original perl script
-- [`convert.py`](convert.py) &mdash; python script
+- [`convert.py`](convert.py) &mdash; python script (requires python 3)
+- [`convert2.py`](convert.py) &mdash; python 2 version of script
 
 Also see the [Ruby version](https://github.com/kbroman/RubyBroman/blob/master/ParseGenotypeData/convert.rb).
