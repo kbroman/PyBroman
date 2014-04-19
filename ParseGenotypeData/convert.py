@@ -1,9 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Combine the data in "genotypes.txt", "markers.txt" and "families.txt"
 # and convert them into a CRI-MAP .gen file
 #
-# This is a ruby version of the perl script discussed in my "Intro to perl"
+# This is a python version of the perl script discussed in my "Intro to perl"
 # at http://www.biostat.wisc.edu/~kbroman/perlintro/index.html#ex2
+#
+# This script requires python3
 
 import re
 
