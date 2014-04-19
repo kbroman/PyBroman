@@ -10,7 +10,8 @@
 import re
 
 def read_markers (filename):
-  lines = open(filename, 'r').readlines()
+  with open(filename, 'r') as f:
+    lines = f.readlines()
   return [line.strip() for line in lines]
 
 class Person:
@@ -25,13 +26,13 @@ class Person:
 
 # read family info and return a hash of people
 def read_families (filename):
-  file = open(filename, 'r')
-  file.readline() # header row
-  people = {}
-  for line in file:
-    vals = line.strip().split()    # strip removes leading and ending white space
-    person = Person(vals[0], vals[1], vals[2], vals[3], vals[4])
-    people[person.famid] = person
+  with open(filename, 'r') as file:
+    file.readline() # header row
+    people = {}
+    for line in file:
+      vals = line.strip().split()    # strip removes leading and ending white space
+      person = Person(vals[0], vals[1], vals[2], vals[3], vals[4])
+      people[person.famid] = person
   return people
 
 # clean up string - > genotype
@@ -42,18 +43,18 @@ def parse_genotype (string):
 
 # read genotype data, fill in genotypes within people hash
 def read_genotypes (filename, people):
-  file = open(filename, 'r')
+  with open(filename, 'r') as file:
 
-  header = file.readline().strip().split()
-  header = header[1:] # omit the first field, "Marker"
+    header = file.readline().strip().split()
+    header = header[1:] # omit the first field, "Marker"
 
-  for line in file:
-    marker = re.sub(r'\s+', '', line[:9])
-    line = line[9:]
-    for i in range(len(header)):
-      person = header[i]
-      start = i*7
-      people[person].gen[marker] = parse_genotype(line[start:(start+7)])
+    for line in file:
+      marker = re.sub(r'\s+', '', line[:9])
+      line = line[9:]
+      for i in range(len(header)):
+        person = header[i]
+        start = i*7
+        people[person].gen[marker] = parse_genotype(line[start:(start+7)])
 
 # distinct families
 def get_families (people):
@@ -64,26 +65,26 @@ def get_family_members (people, family):
   return [people[key] for key in people if people[key].family == family]
 
 def write_genfile (filename, people, markers):
-  file = open(filename, 'w')
-  
-  families = sorted(get_families(people))
-  print(len(families), file=file)
+  with open(filename, 'w') as file:
 
-  print(len(markers), file=file)
-  for marker in markers:
-    print(marker, file=file)
+    families = sorted(get_families(people))
+    print(len(families), file=file)
 
-  for family in families:
-    print(family, file=file)
-    members = sorted(get_family_members(people, family), key=lambda person: int(person.id))
-    print(len(members), file=file)
+    print(len(markers), file=file)
+    for marker in markers:
+      print(marker, file=file)
 
-    for person in members:
-      print("%s %s %s %s" % (person.id, person.mom, person.dad, person.sex), file=file)
+    for family in families:
+      print(family, file=file)
+      members = sorted(get_family_members(people, family), key=lambda person: int(person.id))
+      print(len(members), file=file)
 
-      for marker in markers:
-        print(person.gen[marker], end=" ", file=file)
-      print(file=file)
+      for person in members:
+        print("%s %s %s %s" % (person.id, person.mom, person.dad, person.sex), file=file)
+
+        for marker in markers:
+          print(person.gen[marker], end=" ", file=file)
+        print(file=file)
 
 
 if __name__ == '__main__':
