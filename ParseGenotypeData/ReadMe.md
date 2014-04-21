@@ -5,7 +5,7 @@ Python version of the [long example perl script](http://www.biostat.wisc.edu/~kb
 
 The goal is to take three files obtained from a collaborator (genotype
 data, family info, and order of markers) and combine them into a
-single file in the format used byt the CRI-MAP program.
+single file in the format used by the CRI-MAP program.
 
 - [`genotypes.txt`](genotypes.txt) &mdash; genotype data
 - [`families.txt`](families.txt) &mdash; family information
